@@ -1,4 +1,5 @@
-// SCRIPT 3: Processes all images in a user-selected folder,
+// Loop for subracting background from images for BrainJ
+// Processes all images in a user-selected folder,
 // pausing for manual ROI drawing and rotation.
 
 // 1. Ask user to choose a directory

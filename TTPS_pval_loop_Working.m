@@ -297,7 +297,7 @@ p_values2(p_values2==0)=(1/90000);
 IndPvalues= sum((p_values==0)')./size(p_values,2);
 IndPvalues = 1- IndPvalues;
 [harmonic_p2 combined_p2 stouff_p2 exp_p2] = comb_p_val(p_values2);
-Ranked = find(harmonic_p2 < 0.01/200);
+Ranked = find(harmonic_p2 < 0.05/620); % change this based on multiple comparisons in your data
 Ranked_p = harmonic_p2(Ranked)
 [sortedPValues, originalIndices] = sort(Ranked_p, 'ascend');
 Ranked = Ranked(originalIndices);
@@ -314,5 +314,6 @@ Stouffer = stouff_p2';
 Exp = exp_p2';
 DataTable_Subtraction = table(Brain_Area, Brain_Acr, Brain_ID, Harmonic, Fischer, Stouffer, Exp);
 writetable(DataTable_Subtraction, 'AA_HH_Subtraction.csv');
+
 
 

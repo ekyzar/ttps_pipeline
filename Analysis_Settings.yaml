@@ -1,0 +1,83 @@
+Parameters:
+    input_res: 1.615 #raw data resolution
+    final_res: 1.615 #resolution used for analysis
+    section_thickness: 50
+    tissue_background: 98 #for removing background, also prevents artifacts during restoration
+
+Analysis:
+    ref_section: 83 #reference section for alignment
+    second_pass_ref: False #Peform Second Pass Reg
+    full_res_DAPI: True
+    DAPI_cell_analysis: True # DAPI Analysis option - if selected - will know the DAPI channel and then use different settings
+    DAPI_channel: 4
+    tiles_for_prediction: (2,3) #Setting used to break image into tiles for inference on GPU
+    stard_nms_thresh: 0.3 #StarDist NMS Thresh
+    save_intermediate_data:    True #Store intermediate results such as raw csvs
+    validation_format: tif #    else None
+    validation_scale: (1,1) #output scaling for validation data e.g. (2,2) for half scale
+    validation_jpeg_comp: 100    #100% quality default
+
+Atlas:
+    atlas_dir: "C:/Users/Alejandro/Desktop/BrainJ/ABA_CCF_25_2017/"
+    atlas_res:    (25,25,25)    #atlas resolution
+
+Elastix:
+    location: "C:/Program Files/elastix-5_0_1/"
+
+Channel_1:
+    cell_analysis: True #    True / False - False to disable detection on this channel
+    measure:    True    # T/F - Measure intensity of other channels with these cells
+    rest_model_path:    "C:/Users/Alejandro/Documents/GitHub/BrainJ-Python/BrainJ/Models/2023_07_cfos_2D_1_6um_widefield_256x256_resnet34_V3_1.h5"    #Path to restoration model
+    rest_type: ("tf", "resnet34")    #Type and backbone type if using tf models
+    seg_model: ('StarDist2D', '2D_versatile_fluo') # currently using stardist (model, network) e.g. ("StarDist2D", '2D_versatile_fluo')
+    seg_thresh: 0.05
+    normalize: (0,100)
+    scale: 1 # Additional scaling applied to data - scaleing up improves stardist on low res data
+    preprocess: (0,0,0) #Tophat, gaussian, intensity subtraction (background)
+    prob_thresh: 0.65 #default 0.5, for dapi 0.05
+    cell_size: (10,180)    #min, max 30, 170 good for 1.6um sampling, 15 good for nuclei or smaller cells
+    intensity_filter: 0 #Filter out detected cells below this intensity from results
+    save_val_data: True    #Saves all validation data
+
+Channel_2:
+    cell_analysis: True #    True / False - False to disable detection on this channel
+    measure:    True    # T/F - Measure intensity of other channels with these cells
+    rest_model_path:    "C:/Users/Alejandro/Documents/GitHub/BrainJ-Python/BrainJ/Models/2023_02_Trap2_1_6um_widefield_resnet34_V2_2023_03_backbone_50epochs.hdf5"    #Path to restoration model
+    rest_type: ("tf", "resnet34")    #Type and backbone type if using tf models
+    seg_model: ('StarDist2D', '2D_versatile_fluo') # currently using stardist (model, network) e.g. ("StarDist2D", '2D_versatile_fluo')
+    seg_thresh: 0.05
+    normalize: (0,100)
+    scale: 1 # Additional scaling applied to data - scaleing up improves stardist on low res data
+    preprocess: (0,0,0) #Tophat, gaussian, intensity subtraction (background)
+    prob_thresh: 0.65 #default 0.5, for dapi 0.05
+    cell_size: (10,180)    #min, max 30, 170 good for 1.6um sampling, 15 good for nuclei or smaller cells
+    intensity_filter: 0 #Filter out detected cells below this intensity from results
+    save_val_data: True    #Saves all validation data
+
+Channel_3:
+    cell_analysis: True #    True / False - False to disable detection on this channel
+    measure:    False    # T/F - Measure intensity of other channels with these cells
+    rest_model_path:    "C:/Users/Alejandro/Documents/GitHub/BrainJ-Python/BrainJ/Models/488_Enhanced_Care_2D"    #Path to restoration model
+    rest_type: ("care", 0)    #Type and backbone type if using tf models. If "care", follow by a threshold to remove low intensities and potential artifacts.
+    seg_model: ('StarDist2D', '2D_versatile_fluo') # currently using stardist (model, network) e.g. ("StarDist2D", '2D_versatile_fluo')
+    normalize: (20,99.8)
+    scale: 1 # Additional scaling applied to data - scaleing up improves stardist on low res data
+    preprocess: (0,0,0) #Tophat, gaussian, intensity subtraction (background)
+    prob_thresh: 0.05 #default 0.5, for dapi 0.05 #0.65 (Too Strong - 2023_07) 
+    cell_size: (20,180)    #min, max 30, 170 good for 1.6um sampling, 15 good for nuclei or smaller cells
+    intensity_filter: 0 #Filter out detected cells below this intensity from results
+    save_val_data: True    #Saves all validation data
+
+Channel_4:
+    cell_analysis: True #    True / False - False to disable detection on this channel
+    measure:    False    # T/F - Measure intensity of other channels with these cells
+    rest_model_path:    "C:/Users/Alejandro/Documents/GitHub/BrainJ-Python/BrainJ/Models/DAPI_Enhanced_Care_2D_V2"    #Path to restoration model
+    rest_type: ("care", 0)    #Type and backbone type if using tf models. If "care", follow by a threshold to remove low intensities and potential artifacts.
+    seg_model: ('StarDist2D', '2D_versatile_fluo') # currently using stardist (model, network) e.g. ("StarDist2D", '2D_versatile_fluo')
+    normalize: (20,99.8)
+    scale: 1 # Additional scaling applied to data - scaleing up improves stardist on low res data
+    preprocess: (0,0,0) #Tophat, gaussian, intensity subtraction (background)
+    prob_thresh: 0.05 #default 0.5, for dapi 0.05 #0.65 (Too Strong - 2023_07) 
+    cell_size: (15,180)    #min, max 30, 170 good for 1.6um sampling, 15 good for nuclei or smaller cells
+    intensity_filter: 0 #Filter out detected cells below this intensity from results
+    save_val_data: True    #Saves all validation data
